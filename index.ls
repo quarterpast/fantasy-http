@@ -6,19 +6,22 @@ http = require \http
 #                 , status :: String
 #                 , headers :: Map String String }
 
-# wrap-handler :: (Request → Promise Response) → Request → NodeRes → ()
-export wrap-handler = (handler, req, res)-->
+# wrap-handler :: (Request → Promise Response) → Request → NodeRes → IO Readable
+wrap-handler = (handler, req, res)-->
 	handler req
 	.map write-head res
 	.map (.chain (.body `pipe` res))
-	.fork (.unsafe-perform!)
+
+# run-promise :: Promise IO a → a
+# unsafe! please don't call in pure code
+run-promise = (.fork (.unsafe-perform!))
 
 # pipe :: Readable → Writable → IO Readable
-export pipe = (src,dst)-->
+pipe = (src,dst)-->
 	new IO -> src.pipe dst
 
 # write-head :: NodeRes → Response → IO Response
-export write-head = (res, response)-->
+write-head = (res, response)-->
 	new IO ->
 		res.write-head do
 			response.status-code ? 200
@@ -32,4 +35,4 @@ export listen = (port, server)-->
 	new IO -> server.listen port
 
 # serve :: (Request → Promise Response) → Server
-export serve = http.create-server . wrap-handler
+export serve = http.create-server . (>> run-promise) . wrap-handler
