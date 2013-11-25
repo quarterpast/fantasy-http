@@ -1,7 +1,11 @@
 fantasy-http
 ============
 
-(Mostly) purely functional wrapper around Node's http module
+(Mostly) purely functional wrapper around Node's http module.
+
+```
+npm install fantasy-http
+```
 
 Usage
 -----
