@@ -7,6 +7,8 @@ fantasy-http
 npm install fantasy-http
 ```
 
+[![fantasy land compatible](https://github.com/fantasyland/fantasy-land/blob/master/logo.png)](https://github.com/fantasyland/fantasy-land)
+
 Usage
 -----
 
