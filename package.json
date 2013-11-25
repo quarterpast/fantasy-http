@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "LiveScript": "~1.2.0"
+  },
+  "dependencies": {
+    "fantasy-io": "0.0.1"
   }
 }
